@@ -13,7 +13,7 @@ const CartTotals = () => {
                 className="w-16 h-16 object-cover pt-2" />
                 <div className="flex flex-col ml-2">
                     <b>Kahve</b>
-                    <span>50₺x2</span>
+                    <span>50₺x3</span>
                 </div>
             </div>
             <div className="flex items-center gap-x-2">
