@@ -2,6 +2,7 @@ import { Button, Form, Input, } from 'antd'
 import { Carousel } from 'antd'
 import {Link} from 'react-router-dom'
 import AuthCarousel from '../../components/auth/AuthCarousel'
+import Password from 'antd/es/input/Password'
 
 const Register = () => {
   return (
@@ -19,7 +20,21 @@ const Register = () => {
                 <Form.Item label="Şifre" name="password" rules={[{required:true,message:" Şifre Alanı Boş Bırakılamaz!"}]}>
                     <Input.Password/>
                 </Form.Item>
-                <Form.Item label="Şifre Tekrar" name="passwordagain" rules={[{required:true,message:"Şifre Tekrar Alanı Boş Bırakılamaz!"}]}>
+                <Form.Item label="Şifre Tekrar" name="passwordagain"
+                dependencies={["password"]}
+                rules={[{required:true,message:"Şifre Tekrar Alanı Boş Bırakılamaz!"
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('Şifreler Aynı Değil'));
+                },
+              }),
+            ]}
+               >
+                    
                     <Input.Password/>
                 </Form.Item>
                 <Form.Item>

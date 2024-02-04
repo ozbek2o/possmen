@@ -14,7 +14,7 @@ const CartPage = () => {
         {
           key: '2',
           name: 'John',
-          age: 42,
+          age: 44,
           address: '10 Downing Street',
         },
       ];
