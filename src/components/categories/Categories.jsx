@@ -1,35 +1,42 @@
-import React from 'react'
+import { useEffect, useState } from "react";
+import CartTotals from "../components/cart/CartTotals";
+import Categories from "../components/categories/Categories";
+import Header from "../components/header/Header";
+import Products from "../components/products/Products";
 
-const Categories = () => {
+const HomePage = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/categories/get-all");
+        const data = await res.json();
+        setCategories(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getCategories();
+  }, []);
+
   return (
-    <ul className='flex gap-4 md:flex-col text-lg'>
-<li className='bg-green-400 px-6 py-10 text-white cursor-pointer hover:bg-pink-700 transition-all text-center min-w-[145px]'>
-    <span>Tümü</span>
-</li>
-<li className='bg-green-400 px-6 py-10 text-white cursor-pointer hover:bg-pink-700 transition-all text-center min-w-[145px]'>
-    <span>Yemekler</span>
-</li>
-<li className='bg-green-400 px-6 py-10 text-white cursor-pointer hover:bg-pink-700 transition-all text-center min-w-[145px]'>
-    <span>İçecekler</span>
-</li>
-<li className='bg-green-400 px-6 py-10 text-white cursor-pointer hover:bg-pink-700 transition-all text-center min-w-[145px]'>
-    <span>Tatlı</span>
-</li>
-<li className='bg-green-400 px-6 py-10 text-white cursor-pointer hover:bg-pink-700 transition-all text-center min-w-[145px]'>
-    <span>Meyveler</span>
-</li>
-<li className='bg-green-400 px-6 py-10 text-white cursor-pointer hover:bg-pink-700 transition-all text-center min-w-[145px]'>
-    <span>Meyveler</span>
-</li>
-<li className='bg-green-400 px-6 py-10 text-white cursor-pointer hover:bg-pink-700 transition-all text-center min-w-[145px]'>
-    <span>Meyveler</span>
-</li>
-<li className='bg-green-400 px-6 py-10 text-white cursor-pointer hover:bg-pink-700 transition-all text-center min-w-[145px]'>
-    <span>Meyveler</span>
-</li>
-
-    </ul>
-  )
-}
-
-export default Categories
+    <>
+      <Header />
+      <div className="home px-6 flex md:flex-row flex-col justify-between gap-10 md:pb-0 pb-24">
+        <div className="categories overflow-auto max-h-[calc(100vh_-_112px)] md:pb-10">
+          <Categories />
+          <Categories categories={categories} setCategories={setCategories} />
+        </div>
+        <div className="products flex-[8] max-h-[calc(100vh_-_112px)] overflow-y-auto pb-10">
+          <Products />
+        </div>
+        <div className="cart-wrapper min-w-[300px] md:-mr-[24px] md:-mt-[24px] border">
+          <CartTotals />
+        </div>
+      </div>
+    </>
+  );
+};
+export default HomePage;

@@ -3,7 +3,23 @@ import Header from '../components/header/Header';
 import Categories from '../components/categories/Categories';
 import Products from '../components/products/Products';
 import CartTotals from '../components/cart/CartTotals';
+import { useEffect, useState } from 'react';
 const HomePages = () => {
+  const [categories,setcategories] =useState([]);
+
+useEffect(()=>{
+  const getCategories=()=>{
+    try {
+      const res = await fetch("http://localhost:5000/api/categories/get-all");
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+    getCategories();
+},[])
+
   return (
     <>
      <Header/>
